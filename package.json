@@ -1,0 +1,21 @@
+{
+  "name": "airbnc-be",
+  "version": "1.0.0",
+  "description": "Project - Building an API for a property rental service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chrisfriend38/pt-be-airbnc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Chrisfriend38/pt-be-airbnc/issues"
+  },
+  "homepage": "https://github.com/Chrisfriend38/pt-be-airbnc#readme"
+}
