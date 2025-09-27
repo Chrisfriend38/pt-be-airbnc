@@ -94,7 +94,7 @@ To run the script in terminal: npm run seed
 # Tidying up the Utils Function
 
 * Create a Utils folder
-* Insert Uitls folder inside here and make sure it is linked correctly to utils.test.js 
+* Insert Uitls file inside utils folder and make sure it is linked correctly to utils.test.js 
 * Improving Visibility / Navigation within the db folder
 
 
