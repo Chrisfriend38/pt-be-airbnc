@@ -38,7 +38,7 @@ To run the script in terminal: npm run seed
 * Drop Property Type Table (if exists)
 * Create the table with property_type as the primary key
 * Stores property types (Apartment, House, Studio etc...)
-* Insert the data from property_types.json so the database is seeded with the intial database
+* Insert the data from property_types.json into the table so the database is seeded with the intial database
 
 # Set up Users Table (Drop / Create / Insert)
 
@@ -47,3 +47,30 @@ To run the script in terminal: npm run seed
 * Stores user information such as first name, surname, email, phone number etc.. 
 * Foreigns Keys (FK) are used to connect to other tables
 * Insert the data from users.JSON into the table so the database is seeded with the initial database 
+
+# Set up Reviews Table (Drop / Create / Insert)
+
+* Drop Reviews Table
+* Create the table with reviews_id as the primary key
+* Foreign Key References properties via property_id
+* Foreign Key References users via user_id 
+* Insert the data from reviews.json into the table so the database is seeded with the inital database
+
+
+# Set up Properties Table (Drop / Create / Insert)
+
+* Drop Properties Table
+* Create the table with property_id as the primary key 
+* Foreign Key References users via host_id
+* Insert the data from properties.json into the table so the database is seeded with the intial database
+
+# Utills & Data Mapping 
+
+* Create a utils.js file to handle object creation for mapping the IDs
+* CreateUserRef maps user's full name (first_name + surname to their user_id)
+* CreatePropertyRef maps property's name to it's property_id
+* Replacement of names in seed data with correct foreign key IDs from the database
+* Create a utils.test.js file. Following TDD practises using Jest. Utils function allows correct behaviour of seeding process.
+
+
+

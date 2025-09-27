@@ -1,9 +1,9 @@
 const db = require("./connection");
 const seed = require("./seed");
-const { usersData, propertyTypesData } = require("./data/test");
+const { usersData, propertyTypesData, propertiesData, reviewsData } = require("./data/test");
 
-// Run the seed for Property Types
-seed(usersData, propertyTypesData)
+// Run the seed for all types
+seed(usersData, propertyTypesData, propertiesData, reviewsData)
   .then(() => {
     db.end(); 
   });
