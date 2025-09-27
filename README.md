@@ -84,6 +84,19 @@ To run the script in terminal: npm run seed
 
 * createImagesRef maps images.property_name to property_id using propertyRef square brackets property_id
 
+# Tidying up the Seed Function
+
+* Create a Seed folder
+* Split seed.js into seperate JS files for Drops (dropping tables), Insert (inserting data) and Creating Tables
+* Link these modules to the Seed.js function
+* Improving Visibility / Navigation within the db folder
+
+# Tidying up the Utils Function
+
+* Create a Utils folder
+* Insert Uitls folder inside here and make sure it is linked correctly to utils.test.js 
+* Improving Visibility / Navigation within the db folder
+
 
 
 
