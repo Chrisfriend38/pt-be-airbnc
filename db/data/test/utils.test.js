@@ -1,4 +1,4 @@
-const { createUserRef, createPropertyRef, createImagesRef} = require("../../utils");
+const { createUserRef, createPropertyRef, createImagesRef} = require("../../utils/utils.js");
 
 
 describe("createUserRef", () => {
