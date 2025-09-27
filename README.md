@@ -73,4 +73,17 @@ To run the script in terminal: npm run seed
 * Create a utils.test.js file. Following TDD practises using Jest. Utils function allows correct behaviour of seeding process.
 
 
+# Set up Images Table (Drop / Create / Insert)
+
+* Drop Images Table 
+* Create the table with images_id as the primary key
+* Foreign Key References properties via property_id
+* Insert the data from images.json into the table so the database is seeded with the inital database
+
+# Utills & Data Mapping (Extended)
+
+* createImagesRef maps images.property_name to property_id using propertyRef square brackets property_id
+
+
+
 

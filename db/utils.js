@@ -20,4 +20,13 @@ function createPropertyRef(properties) {
   return result;
 }
 
-module.exports = { createUserRef, createPropertyRef};
+function createImagesRef(imagesArray, propertyRef) {
+  const result = {};
+
+  imagesArray.forEach((image) => {
+    result[image.property_name] = propertyRef[image.property_name];
+  });
+  return result;
+}
+
+module.exports = { createUserRef, createPropertyRef, createImagesRef};

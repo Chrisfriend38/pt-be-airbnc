@@ -1,10 +1,11 @@
 const db = require("./connection");
 const format = require("pg-format");
-const { createUserRef, createPropertyRef } = require("./utils");
+const { createUserRef, createPropertyRef, createImagesRef } = require("./utils");
 
 
-async function seed(usersData, propertyTypesData, propertiesData, reviewsData) {
+async function seed(usersData, propertyTypesData, propertiesData, reviewsData, imagesData) {
 
+  
     // drop all tables (in reverse order, children tables first)
 
     await db.query(`DROP TABLE IF EXISTS reviews;`);
@@ -15,6 +16,7 @@ async function seed(usersData, propertyTypesData, propertiesData, reviewsData) {
     
   
     // create tables
+
 
     // users table
 
@@ -29,15 +31,13 @@ async function seed(usersData, propertyTypesData, propertiesData, reviewsData) {
                     created_at TIMESTAMP DEFAULT NOW()
             );
        `);
-       console.log("Created users table");
 
     // property_types table
     await db.query(`CREATE TABLE property_types (
                     property_type VARCHAR PRIMARY KEY,
                     description TEXT NOT NULL
-            );
-        `);
-    console.log("Created property_types table");
+        );
+    `);
 
     // properties table
     await db.query(`CREATE TABLE properties (
@@ -48,9 +48,8 @@ async function seed(usersData, propertyTypesData, propertiesData, reviewsData) {
                     property_type VARCHAR NOT NULL REFERENCES property_types(property_type),
                     price_per_night INT NOT NULL,
                     description TEXT
-            );
-        `);
-    console.log("Created properties table");
+        );
+    `);
 
     // reviews table
     await db.query(`CREATE TABLE reviews (
@@ -62,18 +61,26 @@ async function seed(usersData, propertyTypesData, propertiesData, reviewsData) {
                     created_at TIMESTAMP DEFAULT NOW()
         );
     `);
-    console.log("Created reviews table");
 
+
+    // Images table
+    await db.query(`CREATE TABLE images (
+                     image_id SERIAL PRIMARY KEY,
+                     property_id INT REFERENCES properties(property_id),
+                     image_url VARCHAR NOT NULL,
+                     alt_text VARCHAR NOT NULL
+        );
+    `);
+    
     // Insert data into tables 
 
     // Users 
     const insertUsers = format(
     `INSERT INTO users (first_name, surname, email, phone_number, is_host, avatar) VALUES %L RETURNING *`,
     usersData.map(user => [user.first_name, user.surname, user.email, user.phone_number, user.is_host, user.avatar])
-  );
-  const { rows: insertedUsers } = await db.query(insertUsers); // capture inserted users for mapping
-  console.log("Inserted users data");
-
+    );
+    const { rows: insertedUsers } = await db.query(insertUsers); // capture inserted users for mapping
+  
     const userRef = createUserRef(insertedUsers);
     // this is to make a number (user_id) correspond to the user, i.e "Alice Johnson": 1
 
@@ -83,7 +90,7 @@ async function seed(usersData, propertyTypesData, propertiesData, reviewsData) {
     `INSERT INTO property_types (property_type, description) VALUES %L`,
     propertyTypesData.map(({ property_type, description }) => 
         [property_type, description])
-  );
+    );
     await db.query(insertTypes);
     console.log("Inserted property types data");
 
@@ -101,13 +108,12 @@ async function seed(usersData, propertyTypesData, propertiesData, reviewsData) {
     ]);
 
     const insertProperties = format(
-  `INSERT INTO properties (host_id, name, location, property_type, price_per_night, description) VALUES %L RETURNING *`,
-  formattedProperties
-  );
-  const { rows: insertedProperties } = await db.query(insertProperties);
-  console.log("Inserted properties data");
-
-  const propertyRef = createPropertyRef(insertedProperties);
+    `INSERT INTO properties (host_id, name, location, property_type, price_per_night, description) VALUES %L RETURNING *`,
+    formattedProperties
+    );
+    const { rows: insertedProperties } = await db.query(insertProperties);
+  
+    const propertyRef = createPropertyRef(insertedProperties);
 
     // Reviews
 
@@ -118,7 +124,7 @@ async function seed(usersData, propertyTypesData, propertiesData, reviewsData) {
       userRef[review.guest_name],        // guest_id from mapping
       review.rating,
       review.comment
-  ]);
+    ]);
 
     const insertReviews = format(
     `INSERT INTO reviews (property_id, guest_id, rating, comment) VALUES %L`,
@@ -127,7 +133,24 @@ async function seed(usersData, propertyTypesData, propertiesData, reviewsData) {
     await db.query(insertReviews);
     console.log("Inserted reviews data");
 
-};
+    // Images
+    const formattedImages = imagesData.map(({ property_name, image_url, alt_tag }) => [
+    propertyRef[property_name],  // property_id from mapping
+    image_url,
+    alt_tag
+    ]);
+  
+    const insertImages = format(
+    `INSERT INTO images (property_id, image_url, alt_text) VALUES %L`,
+    formattedImages
+  );
+  await db.query(insertImages);
+  console.log("Inserted Images Data");
+
+  const imagesRef = createImagesRef(imagesData, propertyRef);
+  
+
+  };
 
 
 module.exports = seed;

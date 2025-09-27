@@ -1,4 +1,4 @@
-const { createUserRef, createPropertyRef} = require("../../utils");
+const { createUserRef, createPropertyRef, createImagesRef} = require("../../utils");
 
 
 describe("createUserRef", () => {
@@ -51,5 +51,41 @@ describe("createPropertyRef", () => {
     });
         
 
+
+});
+
+describe("createImagesRef", () => {
+    test("returns an empty object when passed an empty array", () => {
+        expect(createImagesRef([])).toEqual({});
+    }); 
+    test("references singular images property_name with a property_id number", () => {
+        const input = [
+            { property_name: "Modern Apartment in City Center", image_url: "url1", alt_tag: "tag1" },
+        ];
+        const propertyRef= { "Modern Apartment in City Center": 1 };
+        const output = { "Modern Apartment in City Center": 1 };
+    
+        expect(createImagesRef(input, propertyRef)).toEqual(output);
+    });
+    test("references multiple images property_name with a property_id number", () => {
+        const input = [
+            { property_name: "Modern Apartment in City Center", image_url: "url1", alt_tag: "tag1" },
+            { property_name: "Cosy Family House", image_url: "url2", alt_tag: "tag2" },
+            { property_name: "Chic Studio Near the Beach", image_url: "url3", alt_tag: "tag3" }
+        ];
+
+        const propertyRef= { 
+            "Modern Apartment in City Center": 1, 
+            "Cosy Family House": 2, 
+            "Chic Studio Near the Beach": 3 };
+
+        const output = {
+            "Modern Apartment in City Center": 1,
+            "Cosy Family House": 2,
+            "Chic Studio Near the Beach": 3
+        };
+
+        expect(createImagesRef(input, propertyRef)).toEqual(output);
+    });
 
 });
