@@ -97,6 +97,11 @@ To run the script in terminal: npm run seed
 * Insert Uitls file inside utils folder and make sure it is linked correctly to utils.test.js 
 * Improving Visibility / Navigation within the db folder
 
+# Add an entry point to start API server manually and test endpoints
+
+* Create a listen.js file 
+* Run nodemon listen.js in the terminal
+
 # Create the following endpoint GET/api/properties
 
 * Create the endpoint 
