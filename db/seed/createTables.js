@@ -53,7 +53,14 @@ async function createTables() {
     );
   `);
 
-  console.log("Created all tables");
+  await db.query(`
+  CREATE TABLE favourites (
+    favourite_id SERIAL PRIMARY KEY,
+    guest_id INT NOT NULL REFERENCES users(user_id),
+    property_id INT NOT NULL REFERENCES properties(property_id),
+    created_at TIMESTAMP DEFAULT NOW()
+    );
+  `);
 }
 
 module.exports = createTables;

@@ -97,6 +97,12 @@ To run the script in terminal: npm run seed
 * Insert Uitls file inside utils folder and make sure it is linked correctly to utils.test.js 
 * Improving Visibility / Navigation within the db folder
 
+# Create the following endpoint GET/api/properties
+
+* Create the endpoint 
+* Include Sad and Happy Paths 404 / 200 for integration testing
+* Default behavior: Properties returned are ordered by most favourites to least.
+
 
 
 

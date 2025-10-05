@@ -1,10 +1,10 @@
 const db = require("../connection");
 const dropTables = require("./drops");
 const createTables = require("./createTables");
-const { insertUsers, insertPropertyTypes, insertProperties, insertReviews, insertImages } = require("./insert");
+const { insertUsers, insertPropertyTypes, insertProperties, insertReviews, insertImages, insertFavourites } = require("./insert");
 const { createUserRef, createPropertyRef, createImagesRef } = require("../utils/utils");
 
-async function seed(usersData, propertyTypesData, propertiesData, reviewsData, imagesData) {
+async function seed(usersData, propertyTypesData, propertiesData, reviewsData, imagesData, favouritesData) {
   await dropTables();
   await createTables();
 
@@ -18,6 +18,7 @@ async function seed(usersData, propertyTypesData, propertiesData, reviewsData, i
 
   await insertReviews(reviewsData, userRef, propertyRef);
   await insertImages(imagesData, propertyRef);
+  // await insertFavourites(favouritesData, userRef, propertyRef);
 }
 
 module.exports = seed;
