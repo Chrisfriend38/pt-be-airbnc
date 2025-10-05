@@ -108,6 +108,14 @@ To run the script in terminal: npm run seed
 * Include Sad and Happy Paths 404 / 200 for integration testing
 * Default behavior: Properties returned are ordered by most favourites to least.
 
+# GET/api/properties - Sort Properties by Query 
+
+* Sort properties by price per night or popularity (favourite count) using query parameters.
+```?sort=<cost_per_night | popularity>
+```?order=<ascending     | descending>
+
+
+
 
 
 

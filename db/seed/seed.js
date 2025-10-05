@@ -18,7 +18,7 @@ async function seed(usersData, propertyTypesData, propertiesData, reviewsData, i
 
   await insertReviews(reviewsData, userRef, propertyRef);
   await insertImages(imagesData, propertyRef);
-  // await insertFavourites(favouritesData, userRef, propertyRef);
+  await insertFavourites(favouritesData, userRef, propertyRef);
 }
 
 module.exports = seed;

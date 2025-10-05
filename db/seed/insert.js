@@ -100,9 +100,9 @@ async function insertFavourites(favouritesData, userRef, propertyRef) {
     return []
   };
 
-    const formatted = favouritesData.map(({ guest_id, property_id }) => [
-    userRef[guest_id],
-    propertyRef[property_id],
+    const formatted = favouritesData.map(({ guest_name, property_name }) => [
+    userRef[guest_name],
+    propertyRef[property_name],
   ]);
 
     const query = format(
