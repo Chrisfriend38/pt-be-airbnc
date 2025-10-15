@@ -111,7 +111,7 @@ async function insertFavourites(favouritesData, userRef, propertyRef) {
   );
 
   const { rows } = await db.query(query);
-  console.log("Inserted favourites data");
+  // console.log("Inserted favourites data");
   return rows;
 }
 
