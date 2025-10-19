@@ -4,6 +4,8 @@ Project - Building an API for a property rental service
 
 # Setting up the local test database with a script 
 
+- run `npm install` to install the necessary dependencies 
+
 We are using PostgresSQL to manage the test database
 
 To create the database 'airbnc_test', run: 
