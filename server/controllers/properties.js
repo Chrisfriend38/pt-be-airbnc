@@ -1,21 +1,35 @@
 const { fetchProperties, fetchPropertyById } = require("../models/properties");
 
 exports.getProperties = async (req, res, next) => {
-    const { order } = req.query;
+  const { order, property_type } = req.query;
+  const sortOrder = order === "descending" ? "DESC" : "ASC";
 
-    const sortOrder = order === "descending" ? "DESC" : "ASC";
+  if (order && order !== "ascending" && order !== "descending") {
+    return res.status(400).send({ msg: "Bad Request" });
+  }
 
-    if (order && order !== "ascending" && order !== "descending") {
-      next({ status: 400, msg: "Bad Request" });
+  const maxPriceNumber = parseInt(req.query.maxprice);
+  const minPriceNumber = parseInt(req.query.minprice);
+
+  if (req.query.maxprice && maxPriceNumber.toString() !== req.query.maxprice) {
+    return res.status(400).send({ msg: "Bad Request" });
+  }
+
+  if (req.query.minprice && minPriceNumber.toString() !== req.query.minprice) {
+    return res.status(400).send({ msg: "Bad Request" });
+  }
+
+  try {
+    const properties = await fetchProperties(sortOrder, maxPriceNumber, minPriceNumber, property_type);
+
+    if (!properties || properties.length === 0) {
+      return res.status(200).send({ properties: [] });
     }
 
-    fetchProperties(sortOrder)
-    .then((properties) => {
-      res.status(200).send({ properties });
-    })
-    .catch((err) => {
-      next(err);
-    });
+    res.status(200).send({ properties });
+  } catch (err) {
+    next(err);
+  }
 };
 
 exports.getPropertyById = async (req, res, next) => {
@@ -29,16 +43,18 @@ exports.getPropertyById = async (req, res, next) => {
   }
 
   if (!isNumber) {
-    next({ status: 400, msg: "Bad Request" });
+    return res.status(400).send({ msg: "Bad Request" });
   }
 
-  fetchPropertyById(id)
-  .then((property) => {
-    if (property === undefined) {
-      return next({ status: 404, msg: "Error: Property not found" });
-    } else {
-      res.status(200).send({ property });
-    }  
-  })
-  .catch(next);
-  };
+  try {
+    const property = await fetchPropertyById(id);
+
+    if (!property) {
+      return res.status(404).send({ msg: "Error: Property not found" });
+    }
+
+    res.status(200).send({ property });
+  } catch (err) {
+    next(err);
+  }
+};
