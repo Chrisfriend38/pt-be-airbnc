@@ -6,7 +6,7 @@
   "scripts": {
     "seed": "node db/seed-run.js",
     "seed-prod": "NODE_ENV=production node db/seed-run.js",
-    "start": "index.js",
+    "start": "node listen.js",
     "test": "jest",
     "dev": "nodemon listen.js"
   },
