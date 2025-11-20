@@ -15,13 +15,13 @@ const {
   handleServerErrors,
   handleCustomErrors,
 } = require("./errors");
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send({ msg: "Welcome to the AirBNC API!" });
-});
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/api/properties", getProperties);
 app.get("/api/properties/:id", getPropertyById);
